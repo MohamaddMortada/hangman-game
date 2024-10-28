@@ -1,11 +1,13 @@
 var attemptss=6;
+var gameOver = false;
 var letters=document.querySelectorAll(".letter");
 letters.forEach(letterElement=>{
     letterElement.addEventListener("click",()=>{
-        const letterr=letterElement.textContent;
-        checkLetterr(letterr);
-        isWin();
-    });
+        if (!gameOver) {
+            const letterr=letterElement.textContent;
+            checkLetterr(letterr);
+            isWin();
+    }});
 });
 function checkLetterr(letterr){
 
@@ -28,10 +30,18 @@ function checkLetterr(letterr){
     }
 }
 function isWin(){
-    if(attempts===0) answer+="GAME OVER";
+    if(attempts===0) {
+        gameOver = true;
+        setTimeout(() => {
+        alert('Game Over, you lost');
+    }, 1000);//for some reason the alert is being shown before the head is loaded, so I delayed it
+
+}
     answerSection.textContent=answer;
     answer=document.getElementById('answer-section').textContent;
-    if(!answer.includes('-'))   alert('Congratulations, you win');
+    if(!answer.includes('-')  )setTimeout(() => {
+        alert('Game Over, you lost');
+    }, 1000);//for some reason the alert is being shown before the Answer is loaded, so I delayed it
 }
 
 
